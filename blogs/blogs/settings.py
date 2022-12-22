@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     # my apps
     'blog_app',
     'crispy_forms',
+
+    # third party app
+    "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [

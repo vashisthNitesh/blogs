@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.translation import gettext as _
 # Create your models here.
 from django.contrib.auth import get_user_model
 
@@ -18,7 +18,7 @@ class BlogModel(BaseModel):
     user = models.ForeignKey(UserModel,on_delete=models.CASCADE,related_name="user")
     title = models.CharField(max_length=255,null=True,blank=True,default="")
     likes = models.ManyToManyField(UserModel, related_name="blog")
-    image = models.ImageField(blank=True, null=True)
+    image = models.ImageField(_("Image"),help_text="Height:480px  Width:350px",blank=True, null=True)
     content = models.TextField(default="", null=True, blank=True)
     
     def likes_count(self):
