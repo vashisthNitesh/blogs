@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<style>
+    .navbar{
+        display:none;
+    }
+    .fs-6 a{
+        font-size:16px;
+    }
+</style>
+<div class="wrapper">
+    <div class="logo">
+        <img src="{% static 'images/login.svg' %} " alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        Login
+    </div>
+    <div class="p-3 mt-3">
+        {% if form.errors%}
+           {{forms.errors}}
+        {% endif %}
+      
+        <form method="POST" >
+            {% csrf_token %}
+            {{form.as_p}}
+       
+        <div class="text-center fs-6">
+            <button type="submit" value="Submit" class="btn btn-primary mb-3">Login</button>
+        </div>
+        </form>
+            
+    </div>  
+    <div class="text-center fs-6">
+        <a href="/">Home Page</a> or <a href="{% url 'blogs:signup' %} ">Sign up</a>
+    </div>
+</div>
+{% endblock%}

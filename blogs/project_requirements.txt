@@ -1,0 +1,14 @@
+TASK:
+•	Create three tables in DataBase:
+•	User
+•	Post/Blog
+•	Like
+•	Required APIS
+•	CRUD for all three tables.
+•	GET all post/blog API also return the number of likes of every post/blog
+•	APIs must follow the given rules
+•	Only owner of the post/blog can be able to PUT(Edit) or DELETE the post/blog.
+•	Any user can GET any post/blog if it’s public else only owner can GET it.
+•	When GET request for the post/blog is sended it should also send the number of likes on that post/blog.
+•	There should be only one query for any given API.
+•	i.e. you can not use two separate query for getting the post/blog and like in one API endpoint. In a one query that should be done.

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    body{
+        padding:120px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div id="container">
+    <a href="{% url 'blogs:user_create' %}"><button class="btn btn-primary">create new user</button></a>
+    <table class="table">
+        <thead>
+          <tr>     
+            <th scope="col">Sr.no</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Email</th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>   
+                    <th scope="col">{{forloop.counter}}</th>
+                <td>{{user.username}}</td> 
+                <td>{{user.email}}</td> 
+                <td>{{issue.priority}}</td> 
+                <td><a href="{% url 'blogs:user_update' user.id%}"><i class="fa fa-edit"></i></a></td>   
+                <td><a href="{% url 'blogs:user_delete' user.id%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td> 
+                </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>    
+{% endblock  %}

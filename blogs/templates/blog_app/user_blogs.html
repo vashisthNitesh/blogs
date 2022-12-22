@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    .blog-crud{
+        margin:10px;
+        font-size:30px;
+    }
+    .heart{
+        font-size:30px;
+    }
+    .heart-btn{
+        background: transparent;
+        border: none !important;
+        font-size:0;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<section id="trainer" class="parallax-section">
+	<div class="container">
+		<div class="row">
+            <div class="wow fadeInUp col-md-12 col-sm-12" data-wow-delay="1.3s">
+                <h2>Your  Blogs</h2>
+			</div>
+            {% for blog in blogs %}
+                <div class="wow fadeInUp col-md-4 col-sm-6" data-wow-delay="1.9s">
+                    <div class="trainer-thumb">
+                        <img  src="{{blog.image.url}}" class="img-responsive" alt="Trainer">
+                            <div class="trainer-overlay">
+                            
+                                <div class="blog-crud text-right"><a href="{% url 'blogs:blog_update' blog.id%} "><i class="fa fa-edit"></i></a></div>
+                                <div class="blog-crud text-right"><a href="{% url 'blogs:blog_delete' blog.id %} "><i class="fa fa-trash" aria-hidden="true"></i></a></div>
+                                <div class="trainer-des">
+                                    <h2>{{blog.title}}</h2>
+                                </div>
+                                <div class="hearts">
+                                    <form method="POST" action="{% url 'blogs:user_blogs_list_heart' blog.id %}">
+                                        {% csrf_token %}
+                                        <button class="heart-btn" type="submit" name="pk" value="{{blog.id}}">
+                                            {% if request.user in blog.likes.all %}
+                                                <i style="color:red!important;" class="heart fa fa-heart" aria-hidden="true"></i>
+                                            {% else %}
+                                                <i class="heart fa fa-heart" aria-hidden="true"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </div>
+                                <div>{{blog.likes_count}}</div>
+                               
+                        </div>
+                    </div>
+                    <p>{{blog.content|safe|truncatechars:100}}.</p>
+                </div>
+			{% endfor %}
+
+		</div>
+	</div>
+</section>
+{% endblock%}
+

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+    body{
+        padding-top:100px;
+        align-content:center;
+    }
+    form{
+        display:flex;
+        justify-content:center;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <div class="container text-center">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-lg-6 grid-margin stretch-card">   
+                <div class="card">
+                    <div class="card-body">
+                    <h5> Hi..{{request.user.username}}</h5><br> 
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <p>Are you sure you want to delete "{{ object }}" Blog?</p> 
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type = "submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>    
+{% endblock %}
+
+
+
+
+

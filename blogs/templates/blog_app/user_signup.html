@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Page{% endblock title %}
+
+{% block body %} 
+<style>
+    .navbar{
+        display:none;
+    }
+</style>
+<div class="container">
+
+    <h2 class="text-center">SignUp</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+        <br><br>
+    </form>
+</div>
+{% endblock  %}

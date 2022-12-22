@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block css %}
+<style>
+	.heart{
+        font-size:30px;
+    }
+    .heart-btn{
+        background: transparent;
+        border: none !important;
+        font-size:0;
+		padding-top:115px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<section id="trainer" class="parallax-section">
+	<div class="container">
+		<div class="row">
+            <div class="wow fadeInUp col-md-12 col-sm-12" data-wow-delay="1.3s">
+                <h2>Blogs</h2>
+			</div>
+            {% for blog in blogs %}
+            {% if blog.is_publish %}
+			<div class="wow fadeInUp col-md-4 col-sm-6" data-wow-delay="1.9s">
+				<div class="trainer-thumb">
+					<img  src="{{blog.image.url}}" class="img-responsive" alt="Trainer">
+						<div class="trainer-overlay">
+							<div class="trainer-des">
+								<h2>{{blog.title}}</h2>
+							</div>
+							{% if request.user.is_authenticated %}
+								<div class="hearts">
+									<form method="POST" action="{% url 'blogs:blogs_list_heart' blog.id %}">
+										{% csrf_token %}
+										<button class="heart-btn" type="submit" name="pk" value="{{blog.id}}">
+											{% if request.user in blog.likes.all %}
+												<i style="color:red!important;" class="heart fa fa-heart" aria-hidden="true"></i>
+											{% else %}
+												<i class="heart fa fa-heart" aria-hidden="true"></i>
+											{% endif %}
+										</button>
+									</form>
+								</div>
+								<div>{{blog.likes_count}}</div>
+							{% else %}
+								<button class="heart-btn">
+									<i class="heart fa fa-heart" aria-hidden="true"></i>
+								</button>
+								<div>{{blog.likes_count}}</div>
+							{% endif %}
+						</div>
+				</div>
+				<p>{{blog.content|safe}}.</p>
+			</div>
+			{% endif %}
+			{% endfor %}
+
+		</div>
+	</div>
+</section>
+{% endblock%}

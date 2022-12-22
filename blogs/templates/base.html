@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        
+        <link rel="stylesheet" href=" {% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href=" {% static 'css/animate.css' %} ">
+        <link rel="stylesheet" href=" {% static 'css/font-awesome.min.css' %}">
+        {% comment %} <link rel="stylesheet" href=" {% static 'css/owl.theme.css' %}"> {% endcomment %}
+        <link rel="stylesheet" href=" {% static 'css/login.css' %}">
+       
+
+<!-- Main css -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!-- Google Font -->
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lora:700italic' rel='stylesheet' type='text/css'>
+       
+        <script src="https://use.fontawesome.com/8707e32926.js"></script>
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top sticky-navigation" role="navigation">
+            <div class="container">
+        
+                <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                        <span class="icon icon-bar"></span>
+                    </button>
+                    <a href="/" class="navbar-brand">Blogs</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    {% if request.user.is_authenticated and request.user.is_superuser%}
+                        <ul class="nav navbar-nav navbar-right main-navigation">
+                            <li><a class="smoothScroll"><i class="fa fa-user" aria-hidden="true"></i>{{request.user.username}}</a></li>
+                            <li><a href="{% url 'blogs:blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>Blog</a></li>
+                            <li><a href="{% url 'blogs:user_list' %} " class="smoothScroll">User list</a></li>
+                            <li><a href=" {% url 'blogs:user_blogs_list' %} " class="smoothScroll">My blogs</a></li>
+                            <li><a href=" {% url 'blogs:logout' %} " class="smoothScroll">Logout</a></li>
+                        </ul>
+                    {% elif request.user.is_authenticated %}    
+                        <ul class="nav navbar-nav navbar-right main-navigation">
+                            <li><a class="smoothScroll"><i class="fa fa-user" aria-hidden="true"></i>{{request.user.username}}</a></li>
+                            <li><a href="{% url 'blogs:blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>Blog</a></li>
+                            <li><a href=" {% url 'blogs:user_blogs_list' %} " class="smoothScroll">My blogs</a></li>
+                            <li><a href=" {% url 'blogs:logout' %} " class="smoothScroll">Logout</a></li>
+                        </ul>
+                    {% else %}
+                    <ul class="nav navbar-nav navbar-right main-navigation">
+                        <li><a class="smoothScroll"></a></li>
+                        <li><a href=" {% url 'blogs:login' %} " class="smoothScroll">Login</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+        
+            </div>
+        </div>
+        {% block body %}
+        <!-- content will add here -->
+        {% endblock %}
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js'%}"></script>
+        
+        {% block js %}
+        {% endblock %}
+    </body>
+</html>
