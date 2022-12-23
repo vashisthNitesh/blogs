@@ -40,6 +40,8 @@
                         <ul class="nav navbar-nav navbar-right main-navigation">
                             <li><a class="smoothScroll"><i class="fa fa-user" aria-hidden="true"></i>{{request.user.username}}</a></li>
                             <li><a href="{% url 'blogs:blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>Blog</a></li>
+                            <li><a href="{% url 'blogs:api_blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>api</a></li>
+
                             <li><a href="{% url 'blogs:user_list' %} " class="smoothScroll">User list</a></li>
                             <li><a href=" {% url 'blogs:user_blogs_list' %} " class="smoothScroll">My blogs</a></li>
                             <li><a href=" {% url 'blogs:logout' %} " class="smoothScroll">Logout</a></li>
@@ -48,6 +50,8 @@
                         <ul class="nav navbar-nav navbar-right main-navigation">
                             <li><a class="smoothScroll"><i class="fa fa-user" aria-hidden="true"></i>{{request.user.username}}</a></li>
                             <li><a href="{% url 'blogs:blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>Blog</a></li>
+                            <li><a href="{% url 'blogs:api_blog_create' %} " class="smoothScroll"><i class="fa fa-plus" aria-hidden="true"></i>api</a></li>
+
                             <li><a href=" {% url 'blogs:user_blogs_list' %} " class="smoothScroll">My blogs</a></li>
                             <li><a href=" {% url 'blogs:logout' %} " class="smoothScroll">Logout</a></li>
                         </ul>

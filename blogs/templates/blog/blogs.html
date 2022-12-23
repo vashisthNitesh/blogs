@@ -23,11 +23,15 @@
             {% if blog.is_publish %}
 			<div class="wow fadeInUp col-md-4 col-sm-6" data-wow-delay="1.9s">
 				<div class="trainer-thumb">
+					{% if blog.image %}
 					<img  src="{{blog.image.url}}" class="img-responsive" alt="Trainer">
+					{% endif %}
 						<div class="trainer-overlay">
+							{% if blog.title %}
 							<div class="trainer-des">
 								<h2>{{blog.title}}</h2>
 							</div>
+							{% endif %}
 							{% if request.user.is_authenticated %}
 								<div class="hearts">
 									<form method="POST" action="{% url 'blogs:blogs_list_heart' blog.id %}">
@@ -50,7 +54,9 @@
 							{% endif %}
 						</div>
 				</div>
-				<p>{{blog.content|safe}}.</p>
+				{% if blog.content %}
+					<p>{{blog.content|safe|truncatechars:100}}.</p>
+				{% endif %}
 			</div>
 			{% endif %}
 			{% endfor %}

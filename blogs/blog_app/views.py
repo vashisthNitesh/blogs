@@ -15,7 +15,7 @@ UserModel = get_user_model()
 
 
 class LoginFormView(FormView):
-    template_name = "blog_app/user_login.html"
+    template_name = "user/user_login.html"
     form_class = LogInForm
     success_url = reverse_lazy("blogs:user_blogs_list")
 
@@ -33,7 +33,7 @@ class LoginFormView(FormView):
 class SignUpView(CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('blogs:login')
-    template_name = 'blog_app/user_signup.html'
+    template_name = 'user/user_signup.html'
 
 class LogoutView(View):
     def get(self, request):
@@ -41,7 +41,7 @@ class LogoutView(View):
         return redirect('/')
 
 class BlogsListView(ListView):
-    template_name = "blog_app/blogs.html"
+    template_name = "blog/blogs.html"
     model = BlogModel
     context_object_name = "blogs"
 
@@ -60,7 +60,7 @@ class BlogsListView(ListView):
         
 
 class UserBlogsListView(ListView):
-    template_name = "blog_app/user_blogs.html"
+    template_name = "blog/user_blogs.html"
     model = BlogModel
     context_object_name = "blogs"   
     
@@ -83,7 +83,7 @@ class UserBlogsListView(ListView):
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
     form_class = BlogCreateForm
-    template_name = "blog_app/user_blog_create.html"
+    template_name = "blog/user_blog_create.html"
 
     def get_initial(self, *args, **kwargs):
         initial = super(BlogCreateView, self).get_initial(**kwargs)
@@ -96,7 +96,7 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
 class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = BlogModel
     form_class = BlogCreateForm
-    template_name = "blog_app/user_blog_update.html"
+    template_name = "blog/user_blog_update.html"
     def get_success_url(self):
         return reverse_lazy("blogs:user_blogs_list")
     
@@ -110,14 +110,14 @@ class BlogDeleteView(LoginRequiredMixin, DeleteView):
 # user related views
 
 class UserListView(LoginRequiredMixin, ListView):
-    template_name = "blog_app/user_list.html"
+    template_name = "user/user_list.html"
     model = UserModel
     context_object_name = "users"
 
 
 class UserCreateView(LoginRequiredMixin,CreateView):
     form_class = SignUpForm
-    template_name = "blog_app/user_create.html"
+    template_name = "user/user_create.html"
 
     def get_success_url(self):
         return reverse_lazy("blogs:user_list")
@@ -125,12 +125,12 @@ class UserCreateView(LoginRequiredMixin,CreateView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = UserModel
     form_class = SignUpForm
-    template_name = "blog_app/user_update.html"
+    template_name = "user/user_update.html"
     def get_success_url(self):
         return reverse_lazy("blogs:user_list")
 
 class UserdeleteView(LoginRequiredMixin, DeleteView):
     model = UserModel
-    template_name = "blog_app/user_delete.html"
+    template_name = "user/user_delete.html"
     def get_success_url(self):
         return reverse_lazy("blogs:user_list")      

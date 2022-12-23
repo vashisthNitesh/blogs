@@ -25,4 +25,4 @@ class BlogModel(BaseModel):
         return self.likes.count()
 
     def __str__(self):
-        return self.title
+        return f"{self.title}||{self.id}"

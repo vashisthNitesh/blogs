@@ -25,6 +25,8 @@
                 <td>{{issue.priority}}</td> 
                 <td><a href="{% url 'blogs:user_update' user.id%}"><i class="fa fa-edit"></i></a></td>   
                 <td><a href="{% url 'blogs:user_delete' user.id%}"><i class="fa fa-trash" aria-hidden="true"></i></a></td> 
+                <td><a href="{% url 'blogs:api_user_actions' user.id%}"><i class="fa fa-edit">api</i></a></td>   
+
                 </tr>
           {% endfor %}
         </tbody>

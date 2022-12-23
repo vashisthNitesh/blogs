@@ -25,14 +25,19 @@
             {% for blog in blogs %}
                 <div class="wow fadeInUp col-md-4 col-sm-6" data-wow-delay="1.9s">
                     <div class="trainer-thumb">
+                        {% if blog.image %}
                         <img  src="{{blog.image.url}}" class="img-responsive" alt="Trainer">
+                        {% endif %}
                             <div class="trainer-overlay">
                             
                                 <div class="blog-crud text-right"><a href="{% url 'blogs:blog_update' blog.id%} "><i class="fa fa-edit"></i></a></div>
                                 <div class="blog-crud text-right"><a href="{% url 'blogs:blog_delete' blog.id %} "><i class="fa fa-trash" aria-hidden="true"></i></a></div>
-                                <div class="trainer-des">
-                                    <h2>{{blog.title}}</h2>
-                                </div>
+                                <div class="blog-crud text-right"><a href="{% url 'blogs:api_blog_actions' blog.id%} "><i class="fa fa-edit"></i>api</a></div>
+                                {% if blog.title %}
+                                    <div class="trainer-des">
+                                        <h2>{{blog.title}}</h2>
+                                    </div>
+                                {% endif %}
                                 <div class="hearts">
                                     <form method="POST" action="{% url 'blogs:user_blogs_list_heart' blog.id %}">
                                         {% csrf_token %}
@@ -49,7 +54,9 @@
                                
                         </div>
                     </div>
-                    <p>{{blog.content|safe|truncatechars:100}}.</p>
+                    {% if blog.content %}
+                        <p>{{blog.content|safe|truncatechars:100}}.</p>
+                    {% endif %}
                 </div>
 			{% endfor %}
 

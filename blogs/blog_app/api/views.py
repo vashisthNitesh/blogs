@@ -1,78 +1,49 @@
-from rest_framework.response import Response
-from blog_app.api.serializers import BlogSerializer
-from blog_app.models import BlogModel
-from rest_framework import status
-from django.http.response import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
+from rest_framework import viewsets
+from blog_app.models import BlogModel
+from .import serializers
+from django.contrib.auth import get_user_model
+
+UserModel = get_user_model()
+
+class BlogListView(generics.ListAPIView):
+    queryset = BlogModel.objects.all()
+    serializer_class = serializers.BlogSerializer
+
+class BLogCreateView(LoginRequiredMixin,generics.CreateAPIView):
+    queryset = BlogModel.objects.all()
+    serializer_class = serializers.BlogSerializer
+    permission_classes = []
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)   
+
+class BLogRetreiveUpdateDelete(LoginRequiredMixin,generics.RetrieveUpdateDestroyAPIView):
+    queryset = BlogModel.objects.all()
+    serializer_class = serializers.BlogSerializer
+    permission_classes = []
 
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user) 
 
-class BlogAPIView(LoginRequiredMixin,APIView):
-    """
-    A APIView to perform CRUD operation on Blog Model
-    """
 
-    def get_object(self):
-        try:
-            blog = BlogModel.objects.get(user = self.request.user)
-            if blog.user == self.request.user:
-                return blog
-            else:
-                raise Http404
-        except BlogModel.DoesNotExist:
-            raise Http404
+#  user api views
+class UserApiListView(generics.ListAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = serializers.UserSerializer
 
-    def get(self, request, pk=None, format=None):
-        if pk:
-            data = self.get_object(pk)
-            serializer = BlogSerializer(data)
-        else:
-            data = BlogModel.objects.filter(user=self.request.user).order_by("-created_at")
-            serializer = BlogSerializer(data, many=True)
+class UserApiCreateView(generics.CreateAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = [IsAdminUser]
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class UserRetreiveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    queryset = UserModel.objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = [IsAdminUser]
 
-    def post(self, request, format=None):
-        data = request.data
-        serializer = BlogSerializer(data=data)
-
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save(user=self.request.user)
-
-        return Response(
-            {
-                "message": "Blog Created Successfully",
-                "data": serializer.data,
-            },
-            status=status.HTTP_201_CREATED,
-        )
-
-    def put(self, request, pk=None, format=None):
-        blog_update = self.get_object(pk)
-        serializer = BlogSerializer(
-            instance=blog_update, data=request.data, partial=True
-        )
-
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save()
-
-        return Response(
-            {
-                "message": "Blog Updated Successfully",
-                "data": serializer.data,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-    def delete(self, request, pk, format=None):
-        blog_delete = self.get_object(pk)
-
-        blog_delete.delete()
-
-        return Response(
-            {"message": "Blog Deleted Successfully"}, status=status.HTTP_200_OK
-        )
+        
